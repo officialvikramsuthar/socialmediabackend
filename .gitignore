@@ -1,0 +1,52 @@
+.socialmedia
+
+# Byte-compiled / optimized Python files
+__pycache__/
+*.pyc
+
+# Django related
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+/staticfiles/
+/media/
+
+# Secret keys
+*.env
+
+# Ignore local settings
+**/local_settings.py
+
+# Ignore migrations
+**/migrations/
+
+# Ignore development-specific files
+/.vscode/
+/.idea/
+*.iml
+
+# Ignore any compiled JavaScript
+*.js
+
+# Ignore any generated CSS
+*.css
+
+# Ignore pipenv or virtualenv environments
+/.venv/
+venv/
+pipenv/
+
+# Ignore Django Debug Toolbar's SQL panel state
+.ddb/
+
+# Ignore coverage report
+htmlcov/
+
+# Ignore pytest cache
+pytest_cache/
+
+# Ignore temporary files
+*.swp
+*~
