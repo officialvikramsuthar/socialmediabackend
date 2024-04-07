@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer as JwtTokenObtainPairSerializer
 
-from User.models import FriendRequest
+from .models import FriendRequest
 
 
 class TokenObtainPairSerializer(JwtTokenObtainPairSerializer):
@@ -19,7 +19,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('id', 'email', 'first_name', 'last_name')
 
 
 class FriendRequestSerializer(serializers.ModelSerializer):

@@ -1,15 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django_ratelimit.decorators import ratelimit
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 from .models import User, FriendRequest
 from .serializers import UserCreateSerializer, UserViewSerializer, TokenObtainPairSerializer, FriendRequestSerializer
+from .utils import UserRateThrottleByMinute
 
 
 class RegisterView(APIView):
@@ -41,9 +40,9 @@ class FriendListView(APIView):
         ).distinct()
 
         # Serialize the friend objects
-        serializer = FriendRequestSerializer(friends, many=True)
+        serializer = UserViewSerializer(friends, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 
 class SearchFriendList(APIView):
@@ -71,8 +70,8 @@ class SearchFriendList(APIView):
 class SendFriendRequest(APIView):
 
     permission_classes = (IsAuthenticated,)
+    throttle_classes = (UserRateThrottleByMinute,)
 
-    @ratelimit(key='user', rate='3/m', method='POST', block=True)
     def post(self, request, to_user_id):
         from_user = request.user
         to_user = get_object_or_404(User, pk=to_user_id)
