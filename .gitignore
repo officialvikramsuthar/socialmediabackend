@@ -19,9 +19,6 @@ __pycache__/
 # Ignore local settings
 **/local_settings.py
 
-# Ignore migrations
-**/migrations/
-
 # Ignore development-specific files
 /.vscode/
 /.idea/
